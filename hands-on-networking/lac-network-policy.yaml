@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: demo-network-policy
+  namespace: default
+spec:
+  podSelector: #must be present to specify pods policy applies too
+    matchLabels:
+      role: fullfillment
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          project: la-containers-001cd 
+    - podSelector:
+        matchLabels:
+          role: shipping
+    ports:
+    - protocol: TCP
+      port: 6379

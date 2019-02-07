@@ -1,0 +1,19 @@
+#Bind clusterrole to the desired set of service accounts
+#Policies should typically be bound to service accounts in a namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: la-rolebinding
+  namespace: la-namespace
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: la-clusterrole
+subjects: #specific which accounts clusterrole is bound too
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts # group of all SA in cluster
+  #Example: A specific service account in my namespace
+- kind: ServiceAccount #omit apiGroup
+  name: default #individual SA
+  namespace: la-namespace

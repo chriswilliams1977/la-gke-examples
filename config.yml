@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: la-container
+  name: la-container
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: la-container
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: la-container
+    spec:
+      containers:
+      - image: gcr.io/williamscj-gke-la-deepdive/la-container-image:v3
+        name: la-container-image

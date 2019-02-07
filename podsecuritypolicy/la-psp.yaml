@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: la-psp
+spec:
+  privileged: false #prevents creation of privileged pods
+  seLinux: #security enhanced linux
+    rule: RunAsAny
+  supplementalGroups: #additional user groups with access
+    rule: RunAsAny
+  runAsUser: #defines which user container runs as. typically used to prevent pods running as root
+    rule: RunAsAny
+  fsGroup:
+    rule: RunAsAny
+  volumes:
+  - '*'
